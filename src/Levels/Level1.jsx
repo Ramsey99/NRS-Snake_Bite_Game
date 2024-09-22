@@ -201,6 +201,7 @@ const Level1 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
+    setCountdown(30);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});
