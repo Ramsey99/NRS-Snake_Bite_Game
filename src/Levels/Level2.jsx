@@ -19,7 +19,7 @@ const Level2 = ({ setCompletedLevels }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [abc, setAbc] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(240);
+  const [countdown, setCountdown] = useState(30);
   const [selectedOption, setSelectedOption] = useState([]); // H, N, or X
 
   const handleCompleteLevel2 = () => {
@@ -554,7 +554,7 @@ const Level2 = ({ setCompletedLevels }) => {
 
   useEffect(() => {
     if (countdown <= 0) {
-      window.location.reload(); // Reload the page when countdown reaches zero
+      resetGame(); // Reload the page when countdown reaches zero
       return;
     }
 
@@ -583,6 +583,38 @@ const Level2 = ({ setCompletedLevels }) => {
       return false;
     }
   };
+
+  const resetGame = () => {
+    // Reset the boxes and card selections
+    setBox1({});
+    setBox2({});
+    setBox3({});
+    setBox4({});
+    
+    // Reset the countdown timer
+    setCountdown(30);
+  
+    // Reshuffle the decks (if needed) or just clear selections
+    setHis({});
+    setExam({});
+    
+    // Reset other state variables
+    setsc(0); // Reset selected count
+    setAbc(false);
+    setAlertVisible(false);
+    setSelectedOption([]);
+    
+    // Optionally reset the trigger states
+    setHisTrigger(0);
+    setExamTrigger(0);
+    
+    // Optionally reset other states depending on how the game flow should restart
+    // e.g. setCompletedLevels, showSuccessPopup, etc.
+    
+    console.log("Game has been reset!");
+  };
+  
+  
 
   return (
     <div className="w-full h-auto md:flex flex-col items-center">
@@ -695,7 +727,7 @@ const Level2 = ({ setCompletedLevels }) => {
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
               onClick={() => {
-                window.location.reload();
+                resetGame();
               }}
             >
               Play Again
