@@ -44,7 +44,7 @@ const Level5 = ({ setCompletedLevels }) => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(15);
 
   // Shuffle the deck when the component mounts
   useEffect(() => {
@@ -156,7 +156,7 @@ const Level5 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(30);
+    setCountdown(15);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});

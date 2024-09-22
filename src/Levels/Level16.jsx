@@ -12,7 +12,7 @@ const [selectedCards2, setSelectedCards2] = useState({});
 const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 const [showWrongPopup, setShowWrongPopup] = useState(false);
 const [result, SetResult] = useState([]);
-const [countdown, setCountdown] = useState(30);
+const [countdown, setCountdown] = useState(15);
 
   const handleCompleteLevel16 = () => {
     // Mark level 16 as completed
@@ -148,7 +148,7 @@ const handleSuccessClose = () => {
 };
 
 const resetGame = () => {
-  setCountdown(30);
+  setCountdown(15);
   // Reset the selected cards
   setSelectedCards1({});
   setSelectedCards2({});
