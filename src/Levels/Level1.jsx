@@ -66,7 +66,7 @@ const Level1 = ({ setCompletedLevels }) => {
 
   useEffect(() => {
     if (countdown <= 0) {
-      window.location.reload(); // Reload the page when countdown reaches zero
+     navigate("/level1", { replace: true }); // Reload the page when countdown reaches zero
       return;
     }
     
