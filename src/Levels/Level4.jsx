@@ -64,7 +64,7 @@ const Level4 = ({ setCompletedLevels }) => {
 
   useEffect(() => {
     if (countdown <= 0) {
-      window.location.reload(); // Reload the page when countdown reaches zero
+      resetGame(); // Reload the page when countdown reaches zero
       return;
     }
 
@@ -166,6 +166,7 @@ const Level4 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
+    setCountdown(30);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});
