@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Level4 = ({ setCompletedLevels }) => {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(1000);
   const [deck, setDeck] = useState({});
   const [selectedCards1, setSelectedCards1] = useState({});
   const [selectedCards2, setSelectedCards2] = useState({});
@@ -24,6 +24,12 @@ const Level4 = ({ setCompletedLevels }) => {
       level4: true
     };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
+    const array = [];
+    array.push( selectedCards1.text);
+    array.push( selectedCards2.text);
+
+    console.log(array);
+    localStorage.setItem("level1Result", JSON.stringify(array));
     setCompletedLevels(completedLevels);
 
     // Navigate to level 6
@@ -166,7 +172,7 @@ const Level4 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(10);
+    setCountdown(1000);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});

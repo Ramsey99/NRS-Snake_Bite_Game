@@ -12,7 +12,7 @@ const Level12 = ({ setCompletedLevels }) => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(1000);
 
   const handleCompleteLevel12 = () => {
     // Mark level 10 as completed
@@ -32,6 +32,12 @@ const Level12 = ({ setCompletedLevels }) => {
       level13: false,
     };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
+    const array = [];
+    array.push( selectedCards1.text);
+    array.push( selectedCards2.text);
+
+    console.log(array);
+    localStorage.setItem("level1Result", JSON.stringify(array));
     setCompletedLevels(completedLevels);
 
     // Navigate to level 11
@@ -163,7 +169,7 @@ const Level12 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(10);
+    setCountdown(1000);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});

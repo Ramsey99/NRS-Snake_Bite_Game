@@ -19,7 +19,7 @@ const Level2 = ({ setCompletedLevels }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [abc, setAbc] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(3000);
   const [selectedOption, setSelectedOption] = useState([]); // H, N, or X
 
   const handleCompleteLevel2 = () => {
@@ -35,10 +35,10 @@ const Level2 = ({ setCompletedLevels }) => {
     // setSelectedOption(updatedArray);
     // Save the selected option (H, N, X) from Level 2
     const array = [];
-    array.push(box1.code);
-    array.push(box2.code);
-    array.push(box3.code);
-    array.push(box4.code);
+    array.push(box1.code && box1.text);
+    array.push(box2.code && box2.text);
+    array.push(box3.code && box3.text);
+    array.push(box4.code && box4.text);
 
     console.log(array);
     localStorage.setItem("level2Result", JSON.stringify(array));
@@ -592,7 +592,7 @@ const Level2 = ({ setCompletedLevels }) => {
     setBox4({});
     
     // Reset the countdown timer
-    setCountdown(15);
+    setCountdown(3000);
   
     // Reshuffle the decks (if needed) or just clear selections
     setHis({});

@@ -12,12 +12,15 @@ const Level1 = ({ setCompletedLevels }) => {
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [result, SetResult] = useState([]);
   const [sc, setsc] = useState(0);
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(3000);
 
   const handleCompleteLevel1 = () => {
     // Mark level 1 as completed
     const completedLevels = { level1: true };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
+
+    setCompletedLevels(completedLevels);
+
     setCompletedLevels(completedLevels);
     // Automatically navigate to level 2
     navigate("/level2");
@@ -69,16 +72,15 @@ const Level1 = ({ setCompletedLevels }) => {
       resetGame(); // Reload the page when countdown reaches zero
       return;
     }
-    
+
     // Set the interval to decrease countdown every second (1000 ms)
     const timer = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
-  
+
     // Cleanup the interval on component unmount
     return () => clearInterval(timer);
   }, [countdown]);
-  
 
   const shuffle = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -106,6 +108,9 @@ const Level1 = ({ setCompletedLevels }) => {
       SetResult((prevResult) => [...prevResult, deck]);
       setSelectedCards1(deck);
       initialfun();
+      // Remove selected card from deck
+      const remainingDeck = deck.filter((card) => card.id !== deck.id);
+      setDeck(remainingDeck);
 
       // handleBoxClick(deck, setSelectedCards2, setSelectedCards3, setSelectedCards4);
     }
@@ -118,6 +123,9 @@ const Level1 = ({ setCompletedLevels }) => {
       setSelectedCards2(deck);
       SetResult((prevResult) => [...prevResult, deck]);
       initialfun();
+      // Remove selected card from deck
+      const remainingDeck = deck.filter((card) => card.id !== deck.id);
+      setDeck(remainingDeck);
 
       // handleBoxClick(setSelectedCards1, deck, setSelectedCards3, setSelectedCards4);
     }
@@ -130,6 +138,9 @@ const Level1 = ({ setCompletedLevels }) => {
       setSelectedCards3(deck);
       SetResult((prevResult) => [...prevResult, deck]);
       initialfun();
+      // Remove selected card from deck
+      const remainingDeck = deck.filter((card) => card.id !== deck.id);
+      setDeck(remainingDeck);
 
       // handleBoxClick(setSelectedCards1, setSelectedCards2, deck, setSelectedCards4); // Remove the arguments here
     }
@@ -142,6 +153,9 @@ const Level1 = ({ setCompletedLevels }) => {
       setSelectedCards4(deck);
       SetResult((prevResult) => [...prevResult, deck]);
       initialfun();
+      // Remove selected card from deck
+      const remainingDeck = deck.filter((card) => card.id !== deck.id);
+      setDeck(remainingDeck);
 
       // handleBoxClick(setSelectedCards1, setSelectedCards2, setSelectedCards3 , deck); // Remove the arguments here
     }
@@ -162,6 +176,15 @@ const Level1 = ({ setCompletedLevels }) => {
     ) {
       // console.log('correct');
       setShowSuccessPopup(true);
+
+      const array = [];
+      array.push(selectedCards1.text);
+      array.push(selectedCards2.text);
+      array.push(selectedCards3.text);
+      array.push(selectedCards4.text);
+
+      console.log(array);
+      localStorage.setItem("level1Result", JSON.stringify(array));
     } else {
       // console.log("incorrect");
       setShowWrongPopup(true); // Show wrong popup
@@ -173,35 +196,13 @@ const Level1 = ({ setCompletedLevels }) => {
     // }
   };
 
-  // const handleBoxClick = (card1, card2, card3, card4) => {
-  //   // if(Object.keys(card1).length === 0){
-  //   //   console.log('dfdf');
-
-  //   // }
-  //   console.log(Object.keys(card1).length !== 0);
-  //   console.log(Object.keys(card2).length !== 0);
-  //   console.log("selectedCards3", card3);
-  //   console.log("selectedCards4", card4);
-
-  //   if (sc >= 3) {
-  //     if (
-  //       Object.keys(card1).length !== 0 &&
-  //       Object.keys(card2).length !== 0 &&
-  //       Object.keys(card3).length !== 0 &&
-  //       Object.keys(card4).length !== 0
-  //     ) {
-  //       console.log(selected);
-  //     }
-  //   }
-  // };
-
   const handleSuccessClose = () => {
     setShowSuccessPopup(false);
     handleCompleteLevel1();
   };
 
   const resetGame = () => {
-    setCountdown(15);
+    setCountdown(3000);
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});
@@ -216,12 +217,16 @@ const Level1 = ({ setCompletedLevels }) => {
   return (
     <div className="">
       <div className="flex items-center justify-between w-full">
-        <h2 className="text-xl font-bold mx-auto mr-54">Choose card from deck</h2>
-        
+        <h2 className="text-xl font-bold mx-auto mr-54">
+          Choose card from deck
+        </h2>
       </div>
 
       <div className="w-full h-70 m-7 flex flex-col items-center ml-1">
-        <div className="relative w-60 h-72 cursor-pointer " onClick={initialfun}>
+        <div
+          className="relative w-60 h-72 cursor-pointer "
+          onClick={initialfun}
+        >
           <div className="absolute inset-0 bg-blue-500 border border-gray-400 transform translate-y-12 translate-x-8"></div>
           <div className="absolute inset-0 bg-blue-400 border border-gray-400 transform translate-y-9 translate-x-6"></div>
           <div className="absolute inset-0 bg-blue-300 border border-gray-400 transform translate-y-6 translate-x-4"></div>
@@ -264,12 +269,12 @@ const Level1 = ({ setCompletedLevels }) => {
             >
               <p className="text-md text-center">{selectedCards4.text}</p>
             </div>
-            
           </div>
-          
         </div>
         <div className="flex w-full mt-10">
-          <h2 className="text-xl text-blue-600 font-bold">Time Remaining: {countdown} seconds</h2>
+          <h2 className="text-xl text-blue-600 font-bold">
+            Time Remaining: {countdown} seconds
+          </h2>
         </div>
 
         {/* Success Popup for Correct Sequence */}

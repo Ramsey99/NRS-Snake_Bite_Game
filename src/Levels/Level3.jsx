@@ -13,7 +13,7 @@ const Level3 = ({ setCompletedLevels }) => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(3000);
 
   useEffect(() => {
     // Retrieve the selection from Level 2 from localStorage
@@ -31,6 +31,14 @@ const Level3 = ({ setCompletedLevels }) => {
       level3: true,
     };
     localStorage.setItem("completedLevels", JSON.stringify(completedLevels));
+    const array = [];
+    array.push( selectedCards1.text);
+    array.push( selectedCards2.text);
+    array.push( selectedCards3.text);
+    array.push( selectedCards4.text);
+
+    console.log(array);
+    localStorage.setItem("level1Result", JSON.stringify(array));
     setCompletedLevels(completedLevels);
 
     navigate(path); // Use the passed path to navigate
@@ -158,7 +166,7 @@ const Level3 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(10); // Reset the countdown
+    setCountdown(3000); // Reset the countdown
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});
