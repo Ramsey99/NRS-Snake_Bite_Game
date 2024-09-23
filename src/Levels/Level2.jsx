@@ -35,10 +35,10 @@ const Level2 = ({ setCompletedLevels }) => {
     // setSelectedOption(updatedArray);
     // Save the selected option (H, N, X) from Level 2
     const array = [];
-    array.push(box1.code && box1.text);
-    array.push(box2.code && box2.text);
-    array.push(box3.code && box3.text);
-    array.push(box4.code && box4.text);
+    array.push(box1.code);
+    array.push(box2.code);
+    array.push(box3.code);
+    array.push(box4.code);
 
     console.log(array);
     localStorage.setItem("level2Result", JSON.stringify(array));
