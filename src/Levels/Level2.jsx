@@ -19,7 +19,7 @@ const Level2 = ({ setCompletedLevels }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [abc, setAbc] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(15);
   const [selectedOption, setSelectedOption] = useState([]); // H, N, or X
 
   const handleCompleteLevel2 = () => {
@@ -592,7 +592,7 @@ const Level2 = ({ setCompletedLevels }) => {
     setBox4({});
     
     // Reset the countdown timer
-    setCountdown(30);
+    setCountdown(15);
   
     // Reshuffle the decks (if needed) or just clear selections
     setHis({});

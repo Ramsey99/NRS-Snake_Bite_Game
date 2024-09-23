@@ -13,7 +13,7 @@ const Level3 = ({ setCompletedLevels }) => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showWrongPopup, setShowWrongPopup] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
     // Retrieve the selection from Level 2 from localStorage
@@ -158,7 +158,7 @@ const Level3 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(30); // Reset the countdown
+    setCountdown(10); // Reset the countdown
     // Reset the selected cards
     setSelectedCards1({});
     setSelectedCards2({});

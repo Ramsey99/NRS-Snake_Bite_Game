@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Level8 = ({ setCompletedLevels }) => {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(10);
   const [deck, setDeck] = useState({});
   const [selectedCards, setSelectedCards] = useState({});
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -145,7 +145,7 @@ const Level8 = ({ setCompletedLevels }) => {
   };
 
   const resetGame = () => {
-    setCountdown(15);
+    setCountdown(10);
     // Reset the selected cards
     setSelectedCards({});
 
