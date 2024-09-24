@@ -8,6 +8,8 @@ const Level2 = ({ setCompletedLevels }) => {
   const [exam, setExam] = useState({});
   const [hisTrigger, setHisTrigger] = useState(0);
   const [examTrigger, setExamTrigger] = useState(0);
+  const [currentHistoryIndex, setCurrentHistoryIndex] = useState(0); // Track history index
+  const [currentExamIndex, setCurrentExamIndex] = useState(0); // Track exam index
   const [box1, setBox1] = useState({});
   const [box2, setBox2] = useState({});
   const [box3, setBox3] = useState({});
@@ -19,7 +21,7 @@ const Level2 = ({ setCompletedLevels }) => {
   const [alertMessage, setAlertMessage] = useState("");
   const [abc, setAbc] = useState(false);
   const [result, SetResult] = useState([]);
-  const [countdown, setCountdown] = useState(3000);
+  // const [countdown, setCountdown] = useState(3000);
   const [selectedOption, setSelectedOption] = useState([]); // H, N, or X
 
   const handleCompleteLevel2 = () => {
@@ -42,6 +44,10 @@ const Level2 = ({ setCompletedLevels }) => {
 
     console.log(array);
     localStorage.setItem("level2Result", JSON.stringify(array));
+    
+    const array1 = [box1.text, box2.text, box3.text, box4.text];
+    console.log(array1);
+    localStorage.setItem("level2TextResult", JSON.stringify(array1));
     setCompletedLevels(completedLevels);
     // Navigate to level 3
     navigate("/level3");
@@ -269,34 +275,69 @@ const Level2 = ({ setCompletedLevels }) => {
       type: "exam",
     },
   ];
-  function getRandomhistoryObject() {
-    const randomIndex = Math.floor(Math.random() * initialHistoryDeck.length);
-    return initialHistoryDeck[randomIndex];
-  }
+  // function getRandomhistoryObject() {
+  //   const randomIndex = Math.floor(Math.random() * initialHistoryDeck.length);
+  //   return initialHistoryDeck[randomIndex];
+  // }
 
   // const handleCodeSelect = (code) => {
   //   setSelectedCode(code);
   // };
 
+  // const historyfun = () => {
+  //   setExamTrigger(0);
+  //   setHisTrigger(1);
+  //   // let temp = getRandomhistoryObject();
+  //   setHis(getRandomhistoryObject());
+  // };
+
+  const getNextHistory = () => {
+    // Get the next history object based on the current index
+    if (currentHistoryIndex < initialHistoryDeck.length) {
+      setHis(initialHistoryDeck[currentHistoryIndex]);
+      setCurrentHistoryIndex(currentHistoryIndex + 1); // Move to next index
+    } else {
+      setCurrentHistoryIndex(0); // Reset to the first index
+      setHis(initialHistoryDeck[0]); // Start again
+    }
+  };
+
+  const getNextExam = () => {
+    // Get the next exam object based on the current index
+    if (currentExamIndex < initialExaminationDeck.length) {
+      setExam(initialExaminationDeck[currentExamIndex]);
+      setCurrentExamIndex(currentExamIndex + 1); // Move to next index
+    } else {
+      setCurrentExamIndex(0); // Reset to the first index
+      setExam(initialExaminationDeck[0]); // Start again
+    }
+  };
+
   const historyfun = () => {
     setExamTrigger(0);
     setHisTrigger(1);
-    // let temp = getRandomhistoryObject();
-    setHis(getRandomhistoryObject());
+    getNextHistory(); // Call to get the next history
   };
-
-  function getRandomexamObject() {
-    const randomIndex = Math.floor(
-      Math.random() * initialExaminationDeck.length
-    );
-    return initialExaminationDeck[randomIndex];
-  }
 
   const examfun = () => {
     setExamTrigger(1);
     setHisTrigger(0);
-    setExam(getRandomexamObject());
+    getNextExam(); // Call to get the next exam
   };
+
+  // function getRandomexamObject() {
+  //   const randomIndex = Math.floor(
+  //     Math.random() * initialExaminationDeck.length
+  //   );
+  //   return initialExaminationDeck[randomIndex];
+  // }
+
+  // const examfun = () => {
+  //   setExamTrigger(1);
+  //   setHisTrigger(0);
+  //   setExam(getRandomexamObject());
+  // };
+
   const res1 = () => {
     if (
       (his && Object.keys(his).length > 0) ||
@@ -306,7 +347,6 @@ const Level2 = ({ setCompletedLevels }) => {
       if (hisTrigger) {
         if (conditionforhis(his)) {
           setAbc(true);
-
           return;
         }
         setBox1(his);
@@ -552,20 +592,20 @@ const Level2 = ({ setCompletedLevels }) => {
     handleCompleteLevel2();
   };
 
-  useEffect(() => {
-    if (countdown <= 0) {
-      resetGame(); // Reload the page when countdown reaches zero
-      return;
-    }
+  // useEffect(() => {
+  //   if (countdown <= 0) {
+  //     resetGame(); // Reload the page when countdown reaches zero
+  //     return;
+  //   }
 
-    // Set the interval to decrease countdown every second (1000 ms)
-    const timer = setInterval(() => {
-      setCountdown((prev) => prev - 1);
-    }, 1000);
+  //   // Set the interval to decrease countdown every second (1000 ms)
+  //   const timer = setInterval(() => {
+  //     setCountdown((prev) => prev - 1);
+  //   }, 1000);
 
-    // Cleanup the interval on component unmount
-    return () => clearInterval(timer);
-  }, [countdown]);
+  //   // Cleanup the interval on component unmount
+  //   return () => clearInterval(timer);
+  // }, [countdown]);
 
   const codeSelection = () => {
     if (
@@ -590,31 +630,29 @@ const Level2 = ({ setCompletedLevels }) => {
     setBox2({});
     setBox3({});
     setBox4({});
-    
+
     // Reset the countdown timer
-    setCountdown(3000);
-  
+    // setCountdown(3000);
+
     // Reshuffle the decks (if needed) or just clear selections
     setHis({});
     setExam({});
-    
+
     // Reset other state variables
     setsc(0); // Reset selected count
     setAbc(false);
     setAlertVisible(false);
     setSelectedOption([]);
-    
+
     // Optionally reset the trigger states
     setHisTrigger(0);
     setExamTrigger(0);
-    
+
     // Optionally reset other states depending on how the game flow should restart
     // e.g. setCompletedLevels, showSuccessPopup, etc.
-    
+
     console.log("Game has been reset!");
   };
-  
-  
 
   return (
     <div className="w-full h-auto md:flex flex-col items-center">
@@ -660,7 +698,7 @@ const Level2 = ({ setCompletedLevels }) => {
       <div className="text-xl w-full h-30">
         <div>
           <h2 className="text-center text-lg font-bold mt-14">
-            Select Correct Cards
+            Select Correct option
           </h2>
         </div>
 
@@ -693,9 +731,9 @@ const Level2 = ({ setCompletedLevels }) => {
         </div>
       </div>
       <div className="flex w-full mt-10">
-        <h2 className="text-xl text-blue-600 font-bold">
+        {/* <h2 className="text-xl text-blue-600 font-bold">
           Time Remaining: {countdown} seconds
-        </h2>
+        </h2> */}
       </div>
 
       {/* Success Popup for Correct Sequence */}
