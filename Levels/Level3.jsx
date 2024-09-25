@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Level3 = ({ setCompletedLevels }) => {
   const navigate = useNavigate();
@@ -45,6 +45,16 @@ const Level3 = ({ setCompletedLevels }) => {
 
     navigate(path); // Use the passed path to navigate
   };
+  useEffect(() => {
+    // Save the current level path to localStorage
+    localStorage.setItem('currentLevel', location.pathname);
+
+    // Retrieve current level from localStorage on reload
+    const savedLevel = localStorage.getItem('currentLevel');
+    if (savedLevel && savedLevel !== location.pathname) {
+      navigate(savedLevel); // Navigate to the saved level if it's different
+    }
+  }, [location, navigate]);
 
   const initialDeck = [
     { id: 1, text: "Secure Respiratory and Airway" },

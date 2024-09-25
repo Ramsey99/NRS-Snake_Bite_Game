@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CustomAlert from "./CustomAlert"; // Importing the CustomAlert component
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Level11 = ({ setCompletedLevels }) => {
   const navigate = useNavigate();
@@ -52,6 +52,16 @@ const Level11 = ({ setCompletedLevels }) => {
     //   navigate("/level15");
     // }
   };
+  useEffect(() => {
+    // Save the current level path to localStorage
+    localStorage.setItem('currentLevel', location.pathname);
+
+    // Retrieve current level from localStorage on reload
+    const savedLevel = localStorage.getItem('currentLevel');
+    if (savedLevel && savedLevel !== location.pathname) {
+      navigate(savedLevel); // Navigate to the saved level if it's different
+    }
+  }, [location, navigate]);
 
   const initialDeck = [
     { id: 1, text: "20 WBCT" },
